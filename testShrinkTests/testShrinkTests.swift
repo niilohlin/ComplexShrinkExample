@@ -23,6 +23,18 @@ func fromWithFrequency<T: Arbitrary>(_ s: [(Int, T)]) -> Gen<T> {
     return Gen<T>.frequency(s.map { ($0.0, Gen<T>.pure($0.1)) })
 }
 
+func /<A>(lhs: [A], rhs: Int) -> [[A]] {
+    func split<A>(_ lhs: [A], _ splitSize: Int) -> [[A]] {
+        if (lhs.count) <= splitSize {
+            return [lhs]
+        } else {
+            return [Array<A>(lhs[0..<splitSize])] + split(Array<A>(lhs[splitSize..<lhs.count]), splitSize)
+        }
+    }
+    return split(lhs, lhs.count / rhs)
+    
+}
+
 extension Attribute: Arbitrary {
     public static var arbitrary: Gen<Attribute> {
         return Gen<Attribute>.compose { c in
@@ -273,6 +285,10 @@ class testShrinkTests: XCTestCase {
                 print("failed with markup ", m.stringValue)
             }
         }
+    }
+
+    func testSplit() {
+        print([1, 2, 3, 4, 5, 6, 7] / 2)
     }
     
 }
