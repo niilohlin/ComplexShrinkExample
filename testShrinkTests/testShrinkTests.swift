@@ -68,7 +68,7 @@ extension Markup: Arbitrary {
     public static var arbitrary: Gen<Markup> {
         // Default to depth of 4.
         return Gen<Markup>.compose { c in
-            return Markup.arbitraryChild(depth: 4) |> c.generate
+            return 4 |> Markup.arbitraryChild |> c.generate
         }
     }
 
@@ -102,50 +102,49 @@ extension Markup: Arbitrary {
         }
     }
 
+    // Ok so here is my problem. How should I implement this in the best way?
     public static func shrink(_ markup: Markup) -> [Markup] {
+        return shrink1(markup)
+    }
+
+    // This seems like approach this should make the smallest list. But it still generates a very big list.
+    public static func shrink1(_ markup: Markup) -> [Markup] {
         switch markup {
         case .img(let attrs):
             if attrs.count == 0 {
                 return []
             }
-//            let possibleAttr = Array<Attribute>.shrink(attrs)
-            return [.img([])] //+ possibleAttr.map(Markup.img)
+            return [.img([])]
         case .br(let attrs):
             if attrs.count == 0 {
                 return []
             }
-//            let possibleAttr = Array<Attribute>.shrink(attrs)
-            return [.br([])] //+ possibleAttr.map(Markup.br)
+            return [.br([])]
         case .area(let attrs):
             if attrs.count == 0 {
                 return []
             }
-            //let possibleAttr = Array<Attribute>.shrink(attrs)
-            return [.area([])] //+ possibleAttr.map(Markup.area)
+            return [.area([])]
         case .p(let attrs, let tags):
             if attrs.count == 0 && tags.count == 0 {
                 return []
             }
-//            let attrsAndTags = shrinkListPair(attrs, tags)
-            return [.p([], [])] + tags.flatMap(Markup.shrink)//+ attrsAndTags.map(Markup.p)
+            return [.p([], [])] + tags.flatMap(Markup.shrink)
         case .div(let attrs, let tags):
             if attrs.count == 0 && tags.count == 0 {
                 return []
             }
-//            let attrsAndTags = shrinkListPair(attrs, tags)
-            return [.div([], [])] + tags.flatMap(Markup.shrink)//+ attrsAndTags.map(Markup.div)
+            return [.div([], [])] + tags.flatMap(Markup.shrink)
         case .table(let attrs, let tags):
             if attrs.count == 0 && tags.count == 0 {
                 return []
             }
-//            let attrsAndTags = shrinkListPair(attrs, tags)
-            return [.table([], [])] + tags.flatMap(Markup.shrink)//+ attrsAndTags.map(Markup.table)
+            return [.table([], [])] + tags.flatMap(Markup.shrink)
         case .a(let attrs, let tags):
             if attrs.count == 0 && tags.count == 0 {
                 return []
             }
-//            let attrsAndTags = shrinkListPair(attrs, tags)
-            return [.a([], [])] + tags.flatMap(Markup.shrink)//+ attrsAndTags.map(Markup.a)
+            return [.a([], [])] + tags.flatMap(Markup.shrink)
         case .string(let string):
             if string.lengthOfBytes(using: .utf8) == 0 {
                 return []
@@ -153,7 +152,97 @@ extension Markup: Arbitrary {
             return [.string("")] + String.shrink(string).map(Markup.string)
         }
     }
-    // Return the "size" of the markup tree. Used for sorting the shrinktree so it starts with the smallest tree and continues to the largest.
+
+    // This approach uses the 'algorithm' described on https://hackage.haskell.org/package/QuickCheck-2.9.2/docs/Test-QuickCheck.html#v:arbitrary
+    // This still creates huge lists. Maybe this approach works better in haskell because haskell is lazy?
+    public static func shrink2(_ markup: Markup) -> [Markup] {
+        switch markup {
+        case .img(let attrs):
+            if attrs.count == 0 {
+                return []
+            }
+            let possibleAttr = Array<Attribute>.shrink(attrs).sorted { (attr1, attr2) in attr1.count < attr2.count }
+            return [.img([])] + possibleAttr.map(Markup.img)
+        case .br(let attrs):
+            if attrs.count == 0 {
+                return []
+            }
+            let possibleAttr = Array<Attribute>.shrink(attrs).sorted { (attr1, attr2) in attr1.count < attr2.count }
+            return [.br([])] + possibleAttr.map(Markup.br)
+        case .area(let attrs):
+            if attrs.count == 0 {
+                return []
+            }
+            let possibleAttr = Array<Attribute>.shrink(attrs).sorted { (attr1, attr2) in attr1.count < attr2.count }
+            return [.area([])] + possibleAttr.map(Markup.area)
+        case .p(let attrs, let tags):
+            if attrs.count == 0 && tags.count == 0 {
+                return []
+            }
+            let attrsAndTags = shrinkListPair(attrs, tags)
+            return [.p([], [])] + attrsAndTags.map(Markup.p)
+        case .div(let attrs, let tags):
+            if attrs.count == 0 && tags.count == 0 {
+                return []
+            }
+            let attrsAndTags = shrinkListPair(attrs, tags)
+            return [.div([], [])] + attrsAndTags.map(Markup.div)
+        case .table(let attrs, let tags):
+            if attrs.count == 0 && tags.count == 0 {
+                return []
+            }
+            let attrsAndTags = shrinkListPair(attrs, tags)
+            return [.table([], [])] + attrsAndTags.map(Markup.table)
+        case .a(let attrs, let tags):
+            if attrs.count == 0 && tags.count == 0 {
+                return []
+            }
+            let attrsAndTags = shrinkListPair(attrs, tags)
+            return [.a([], [])] + attrsAndTags.map(Markup.a)
+        case .string(let string):
+            if string.lengthOfBytes(using: .utf8) == 0 {
+                return []
+            }
+            return [.string("")] + String.shrink(string).map(Markup.string)
+        }
+    }
+
+    // This is the naive approach. This was my first attempt. I tried a few more with this approach. 
+    // For example generating the cartesian product between the attributes and tags. And one where I sorted them.
+    // It did not work.
+    public static func shrink3(_ markup: Markup) -> [Markup] {
+        switch markup {
+        case .img(let attrs):
+            let possibleAttr = Array<Attribute>.shrink(attrs)
+            return possibleAttr.map(Markup.img)
+        case .br(let attrs):
+            let possibleAttr = Array<Attribute>.shrink(attrs)
+            return possibleAttr.map(Markup.br)
+        case .area(let attrs):
+            let possibleAttr = Array<Attribute>.shrink(attrs)
+            return  possibleAttr.map(Markup.area)
+        case .p(let attrs, let tags):
+            let possibleAttributes = Array<Attribute>.shrink(attrs)
+            let possibleTags = Array<Markup>.shrink(tags)
+            return zip(possibleAttributes, possibleTags).map(Markup.p)
+        case .div(let attrs, let tags):
+            let possibleAttributes = Array<Attribute>.shrink(attrs)
+            let possibleTags = Array<Markup>.shrink(tags)
+            return zip(possibleAttributes, possibleTags).map(Markup.div)
+        case .table(let attrs, let tags):
+            let possibleAttributes = Array<Attribute>.shrink(attrs)
+            let possibleTags = Array<Markup>.shrink(tags)
+            return zip(possibleAttributes, possibleTags).map(Markup.table)
+        case .a(let attrs, let tags):
+            let possibleAttributes = Array<Attribute>.shrink(attrs)
+            let possibleTags = Array<Markup>.shrink(tags)
+            return zip(possibleAttributes, possibleTags).map(Markup.a)
+        case .string(let string):
+            return String.shrink(string).map(Markup.string)
+        }
+    }
+
+    // Return the "size" of the markup tree. Used for sorting the Markups so it starts with the smallest tree and continues to the largest.
     var size: Int {
             switch self {
             case .img(let attrs):
@@ -178,18 +267,11 @@ extension Markup: Arbitrary {
 
 class testShrinkTests: XCTestCase {
 
-    func testExample() {
+    func testPropertyThatFailsWithBadShrinking() {
         property("A failing property that takes a long time to shrink") <- forAll { (m: Markup) in
-            return (!m.stringValue.printableString.contains("s")).whenFail {
+            return (!m.printableString.contains("s")).whenFail {
                 print("failed with markup ", m.stringValue)
             }
-        }
-    }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
         }
     }
     

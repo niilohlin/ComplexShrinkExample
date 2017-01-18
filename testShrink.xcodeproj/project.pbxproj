@@ -7,14 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C80A0BCE1E2F99DA0047AC76 /* SwiftCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C80A0BCD1E2F99DA0047AC76 /* SwiftCheck.framework */; };
+		C80A0BCF1E2F99DA0047AC76 /* SwiftCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C80A0BCD1E2F99DA0047AC76 /* SwiftCheck.framework */; };
+		C80A0BD01E2F99E50047AC76 /* SwiftCheck.framework in Resources */ = {isa = PBXBuildFile; fileRef = C80A0BCD1E2F99DA0047AC76 /* SwiftCheck.framework */; };
 		C81272B21E2F5F55008B790B /* Markup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81272B11E2F5F55008B790B /* Markup.swift */; };
 		C81272B31E2F6004008B790B /* testShrink.framework in Resources */ = {isa = PBXBuildFile; fileRef = C8E8603F1E2F5A4100D8463F /* testShrink.framework */; };
 		C8E860491E2F5A4100D8463F /* testShrink.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8E8603F1E2F5A4100D8463F /* testShrink.framework */; };
 		C8E8604E1E2F5A4100D8463F /* testShrinkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E8604D1E2F5A4100D8463F /* testShrinkTests.swift */; };
 		C8E860501E2F5A4100D8463F /* testShrink.h in Headers */ = {isa = PBXBuildFile; fileRef = C8E860421E2F5A4100D8463F /* testShrink.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C8E8605A1E2F5B2D00D8463F /* SwiftCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8E860591E2F5B2D00D8463F /* SwiftCheck.framework */; };
-		C8E8605B1E2F5B3D00D8463F /* SwiftCheck.framework in Resources */ = {isa = PBXBuildFile; fileRef = C8E860591E2F5B2D00D8463F /* SwiftCheck.framework */; };
-		C8F132D01E2F61C20071F203 /* SwiftCheck.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C8E860591E2F5B2D00D8463F /* SwiftCheck.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,13 +34,13 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				C8F132D01E2F61C20071F203 /* SwiftCheck.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C80A0BCD1E2F99DA0047AC76 /* SwiftCheck.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftCheck.framework; path = Carthage/Build/iOS/SwiftCheck.framework; sourceTree = "<group>"; };
 		C81272B11E2F5F55008B790B /* Markup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Markup.swift; sourceTree = "<group>"; };
 		C8E8603F1E2F5A4100D8463F /* testShrink.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = testShrink.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8E860421E2F5A4100D8463F /* testShrink.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = testShrink.h; sourceTree = "<group>"; };
@@ -48,7 +48,6 @@
 		C8E860481E2F5A4100D8463F /* testShrinkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = testShrinkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8E8604D1E2F5A4100D8463F /* testShrinkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testShrinkTests.swift; sourceTree = "<group>"; };
 		C8E8604F1E2F5A4100D8463F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C8E860591E2F5B2D00D8463F /* SwiftCheck.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SwiftCheck.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +55,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C80A0BCE1E2F99DA0047AC76 /* SwiftCheck.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -64,16 +64,25 @@
 			buildActionMask = 2147483647;
 			files = (
 				C8E860491E2F5A4100D8463F /* testShrink.framework in Frameworks */,
-				C8E8605A1E2F5B2D00D8463F /* SwiftCheck.framework in Frameworks */,
+				C80A0BCF1E2F99DA0047AC76 /* SwiftCheck.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C80A0BCA1E2F98C60047AC76 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C80A0BCD1E2F99DA0047AC76 /* SwiftCheck.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		C8E860351E2F5A4100D8463F = {
 			isa = PBXGroup;
 			children = (
+				C80A0BCA1E2F98C60047AC76 /* Frameworks */,
 				C8E860411E2F5A4100D8463F /* testShrink */,
 				C8E8604C1E2F5A4100D8463F /* testShrinkTests */,
 				C8E860401E2F5A4100D8463F /* Products */,
@@ -102,7 +111,6 @@
 		C8E8604C1E2F5A4100D8463F /* testShrinkTests */ = {
 			isa = PBXGroup;
 			children = (
-				C8E860591E2F5B2D00D8463F /* SwiftCheck.framework */,
 				C8E8604D1E2F5A4100D8463F /* testShrinkTests.swift */,
 				C8E8604F1E2F5A4100D8463F /* Info.plist */,
 			);
@@ -148,6 +156,7 @@
 				C8E860441E2F5A4100D8463F /* Sources */,
 				C8E860451E2F5A4100D8463F /* Frameworks */,
 				C8E860461E2F5A4100D8463F /* Resources */,
+				C80A0BC91E2F97A30047AC76 /* ShellScript */,
 				C8F132CF1E2F61B60071F203 /* CopyFiles */,
 			);
 			buildRules = (
@@ -213,12 +222,29 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C80A0BD01E2F99E50047AC76 /* SwiftCheck.framework in Resources */,
 				C81272B31E2F6004008B790B /* testShrink.framework in Resources */,
-				C8E8605B1E2F5B3D00D8463F /* SwiftCheck.framework in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		C80A0BC91E2F97A30047AC76 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/SwiftCheck.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\n/usr/local/bin/carthage copy-frameworks";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		C8E8603A1E2F5A4100D8463F /* Sources */ = {
@@ -360,6 +386,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/testShrinkTests",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = testShrink/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -385,6 +412,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/testShrinkTests",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = testShrink/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -404,8 +432,12 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/testShrinkTests/**",
+					"\"$(SRCROOT)/Carthage/\"/**",
+					"\"$(SRCROOT)/testShrinkTests/SwiftCheck.framework\"",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/SwiftCheck",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				HEADER_SEARCH_PATHS = "$(INHERITED)/**";
+				HEADER_SEARCH_PATHS = "\"$(inherited)\"";
 				INFOPLIST_FILE = testShrinkTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = se.atea.testShrinkTests;
@@ -422,8 +454,12 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/testShrinkTests/**",
+					"\"$(SRCROOT)/Carthage/\"/**",
+					"\"$(SRCROOT)/testShrinkTests/SwiftCheck.framework\"",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/SwiftCheck",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				HEADER_SEARCH_PATHS = "$(INHERITED)/**";
+				HEADER_SEARCH_PATHS = "\"$(inherited)\"";
 				INFOPLIST_FILE = testShrinkTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = se.atea.testShrinkTests;
